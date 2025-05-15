@@ -1,9 +1,10 @@
 
 import Input from './components/Input';
 import Button from './components/Button';
-
+import ReverseButton from './components/Button/reverseButton';
 import { Container, Content, Row } from './styles';
 import { useState } from 'react';
+
 
 
 const App = () => {
@@ -49,6 +50,36 @@ const App = () => {
 
   }
 
+  const handleMultiNumbers = () => {
+
+    if(firstNumber === '0'){
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0')
+        setOperation('*')
+    }else {
+      const sum = Number(firstNumber) * Number(currentNumber);
+      setCurrentNumber(String(sum))
+      setOperation('')
+    }
+
+  }
+
+  const handleDivideNumbers = () => {
+
+    if(firstNumber === '0'){
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0')
+        setOperation('/')
+    }  
+        
+        else {
+        const sum = Number(firstNumber) / Number(currentNumber);
+        setCurrentNumber(String(sum))
+        setOperation('')
+      }}
+
+
+
   const handleEquals = () => {
 
     if(firstNumber !== '0' && operation !== '' && currentNumber !== '0'){
@@ -58,6 +89,12 @@ const App = () => {
             break;
           case '-':
             handleMinusNumbers();
+            break;
+          case '*':
+            handleMultiNumbers();
+            break;
+          case '/':
+            handleDivideNumbers();
             break;
           default: 
             break;
@@ -71,29 +108,30 @@ const App = () => {
       <Content>
         <Input value={currentNumber}/>
         <Row>
-          <Button label="x"/>
-          <Button label="/"/>
-          <Button label="c" onClick={handleOnClear}/>
-          <Button label="."/>
+          <ReverseButton label="C" onClick={handleOnClear}/>
+          <ReverseButton label="*" onClick={handleMultiNumbers}/>
+          <ReverseButton label="/" onClick={handleDivideNumbers}/>
+          <ReverseButton label="." onClick={() => handleAddNumber(".")}/>
         </Row>
         <Row>
           <Button label="7" onClick={() => handleAddNumber('7')}/>
           <Button label="8" onClick={() => handleAddNumber('8')}/>
           <Button label="9" onClick={() => handleAddNumber('9')}/>
-          <Button label="-" onClick={handleMinusNumbers}/>
+          <ReverseButton label="-" onClick={handleMinusNumbers}/>
         </Row>
         <Row>
           <Button label="4" onClick={() => handleAddNumber('4')}/>
           <Button label="5" onClick={() => handleAddNumber('5')}/>
           <Button label="6" onClick={() => handleAddNumber('6')}/>
-          <Button label="+" onClick={handleSumNumbers}/>
+          <ReverseButton label="+" onClick={handleSumNumbers}/>
         </Row>
         <Row>
           <Button label="1" onClick={() => handleAddNumber('1')}/>
           <Button label="2" onClick={() => handleAddNumber('2')}/>
           <Button label="3" onClick={() => handleAddNumber('3')}/>
-          <Button label="=" onClick={handleEquals}/>
+          <ReverseButton label="=" onClick={handleEquals}/>
         </Row>
+       
       </Content>
     </Container>
   );
